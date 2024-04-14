@@ -1,7 +1,6 @@
-import Sidebar from '@/components/Sidebar';
-import { createClient } from '@/utils/supabase/server';
+import React from 'react';
 import { redirect } from 'next/navigation';
-import React from 'react'
+import { createClient } from '@/utils/supabase/server';
 
 async function ProtectedLayout({ children }: { children: React.ReactNode }) {
     const supabase = createClient();
@@ -14,13 +13,8 @@ async function ProtectedLayout({ children }: { children: React.ReactNode }) {
     }
 
     return (
-        <div className='flex h-screen text-sm'>
-            <div className='w-[280px] shrink-0 border-r border-border'>
-                <Sidebar />
-            </div>
-            <main className='w-full'>
-                {children}
-            </main>
+        <div>
+            {children}
         </div>
     )
 }

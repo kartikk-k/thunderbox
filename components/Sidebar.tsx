@@ -3,8 +3,19 @@ import Image from 'next/image'
 import Logo from '@/assets/logo.svg'
 import { ArrowUpDownIcon, MembersIcon, ProjectIcon, SettingsIcon, WorkspaceIcon } from '@/assets/icons'
 import Link from 'next/link'
+import OrgSelector from './OrgSelector'
+import { createClient } from '@/utils/supabase/server'
 
-function Sidebar() {
+async function Sidebar() {
+
+    const supabase = createClient()
+    const user = (await supabase.auth.getUser()).data.user
+    
+    const members = (await supabase.from('members')
+        .select(`*, orgs(*)`)
+        .eq('user_id', (user!.id as string))
+    ).data as Member[] || []
+
     return (
         <div className='flex flex-col justify-between h-full p-6'>
             <div className='space-y-14'>
@@ -43,7 +54,11 @@ function Sidebar() {
                 </ul>
             </div>
 
-            <div className='p-1.5 rounded-full cursor-pointer flex items-center gap-2 bg-[#23292D]'>
+            <OrgSelector
+                members={members}
+            />
+
+            {/* <div className='p-1.5 rounded-full cursor-pointer flex items-center gap-2 bg-[#23292D]'>
                 <div className='w-10 h-10 shrink-0 rounded-full bg-[#49555F] text-[#94A3AF] flex items-center justify-center font-semibold'>
                     TC
                 </div>
@@ -56,7 +71,7 @@ function Sidebar() {
                         <ArrowUpDownIcon />
                     </button>
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }
