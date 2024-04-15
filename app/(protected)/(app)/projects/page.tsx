@@ -18,7 +18,7 @@ export default async function ProtectedPage({
   if (!orgId?.trim() || orgId === 'undefined') {
 
     orgId = await supabase.from('members')
-      .select("*").eq('user_id', user?.id)
+      .select("*").eq('user', user?.email)
       .single()
       .then(res => {
         if (res.error) return undefined
@@ -34,11 +34,10 @@ export default async function ProtectedPage({
   const isMember = await supabase.from('members')
     .select('id')
     .eq('org_id', orgId)
-    .eq('user_id', user?.id)
+    .eq('user', user?.email)
     .single()
 
   if (isMember.error) redirect('/orgs/new')
-  else console.log('User is a member of this organization')
 
   const projects = await supabase.from('projects')
     .select('*')
@@ -54,10 +53,10 @@ export default async function ProtectedPage({
       <div className="flex items-center justify-between h-12">
         <h1 className="text-[#95A4B2] text-lg">Projects</h1>
 
-        <button className="flex items-center gap-2 p-4 pl-3 h-10 hover:brightness-110 text-[#19B785] bg-[#1B3634] rounded-full">
+        <Link href={`/projects/new?orgId=${orgId}`} className="flex items-center gap-2 p-4 pl-3 h-10 hover:brightness-110 text-[#19B785] bg-[#1B3634] rounded-full">
           <PlusIcon size={18} />
           Create Project
-        </button>
+        </Link>
       </div>
 
       <div className="items-center gap-6 sm:grid lg:grid-cols-2 xl:grid-cols-3">

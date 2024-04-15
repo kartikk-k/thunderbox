@@ -27,7 +27,7 @@ export default async function page() {
         const res = await supabase.from('members')
             .insert({
                 role: 'admin',
-                user_id: user?.id,
+                user: user?.email,
                 org_id: data.id
             })
 

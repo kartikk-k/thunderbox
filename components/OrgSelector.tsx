@@ -45,6 +45,10 @@ function OrgSelector({ members }: props) {
                         </SelectItem>
                     ))}
 
+                    <span 
+                        className='block w-full h-[1px] bg-[#1D2226] my-1'
+                    />
+
                     <SelectItem value='new'>
                         <div className='items-center gap-1.5 flex'>
                             <PlusIcon size={16} />

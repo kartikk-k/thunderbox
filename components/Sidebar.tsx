@@ -1,10 +1,10 @@
-import React from 'react'
 import Image from 'next/image'
 import Logo from '@/assets/logo.svg'
-import { ArrowUpDownIcon, MembersIcon, ProjectIcon, SettingsIcon, WorkspaceIcon } from '@/assets/icons'
+import { MembersIcon, ProjectIcon, SettingsIcon, WorkspaceIcon } from '@/assets/icons'
 import Link from 'next/link'
 import OrgSelector from './OrgSelector'
 import { createClient } from '@/utils/supabase/server'
+import NavLink from './NavLink'
 
 async function Sidebar() {
 
@@ -13,8 +13,8 @@ async function Sidebar() {
     
     const members = (await supabase.from('members')
         .select(`*, orgs(*)`)
-        .eq('user_id', (user!.id as string))
-    ).data as Member[] || []
+        .eq('user', (user!.email as string))
+    ).data || []
 
     return (
         <div className='flex flex-col justify-between h-full p-6'>
@@ -28,28 +28,28 @@ async function Sidebar() {
 
                 <ul className='space-y-6 text-[#737E86]'>
                     <li>
-                        <Link href={''} className='flex gap-3 items-center text-[#BCC7CE]'>
+                        <NavLink href={'/projects'}>
                             <ProjectIcon />
                             <p>Projects</p>
-                        </Link>
+                        </NavLink>
                     </li>
                     <li>
-                        <Link href={''} className='flex items-center gap-3'>
+                        <NavLink href={'/members'}>
                             <MembersIcon />
                             <p>Members</p>
-                        </Link>
+                        </NavLink>
                     </li>
                     <li>
-                        <Link href={''} className='flex items-center gap-3'>
+                        <NavLink href={''}>
                             <SettingsIcon />
                             <p>Settings</p>
-                        </Link>
+                        </NavLink>
                     </li>
                     <li>
-                        <Link href={''} className='flex items-center gap-3'>
+                        <NavLink href={''}>
                             <WorkspaceIcon />
                             <p>Workspaces</p>
-                        </Link>
+                        </NavLink>
                     </li>
                 </ul>
             </div>

@@ -8,7 +8,7 @@ type OrgType = {
     id: string;
     created_at: string;
     role: string;
-    user_id: string;
+    user: string;
     org_id: string;
     orgs?: OrgType
   };
