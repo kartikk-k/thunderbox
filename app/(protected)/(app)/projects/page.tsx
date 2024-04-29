@@ -19,10 +19,11 @@ export default async function ProtectedPage({
 
     orgId = await supabase.from('members')
       .select("*").eq('user', user?.email)
-      .single()
+      .limit(1)
       .then(res => {
+        console.log("Org result", res)
         if (res.error) return undefined
-        else return redirect(`/projects?orgId=${res.data.org_id}`)
+        else return redirect(`/projects?orgId=${res.data[0].org_id}`)
       })
   }
 
