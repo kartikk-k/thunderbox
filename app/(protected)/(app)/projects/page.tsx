@@ -64,7 +64,7 @@ export default async function ProtectedPage({
 
         {projects.length > 0 ? projects.map((project) => (
 
-          <div key={project.id} className="bg-[#1D2226] w-full text-xs group flex flex-col justify-between h-32 p-4 rounded-3xl text-[#95A4B2]">
+          <Link href={`editor?projectId=${project.id}`} key={project.id} className="bg-[#1D2226] w-full text-xs group flex flex-col justify-between h-32 p-4 rounded-3xl text-[#95A4B2]">
             <div className="flex justify-between ">
               <div className="space-y-1">
                 <h1 className="text-base text-white">{project.name}</h1>
@@ -83,7 +83,7 @@ export default async function ProtectedPage({
               <p>CSS: {project.css_files_count}</p>
             </div>
 
-          </div>
+          </Link>
 
         )) : (
           <Link href={`/projects/new?orgId=${orgId}`} className="border-[#19B785] cursor-pointer brightness-75 border-2 bg-[#1B3634]  w-full group flex items-center justify-center h-32 p-4 rounded-3xl text-[#19B785]">
