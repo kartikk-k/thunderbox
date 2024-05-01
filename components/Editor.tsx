@@ -65,6 +65,21 @@ function Editor({ projectId, files }: props) {
         else toast.info('File pushed to production')
     }
 
+    const createFile = async () => {
+        // take input from browser
+        const name = prompt('Enter file name')
+        if (!name) return
+
+        // create file in database
+        const { data, error } = await supabase.from('files')
+            .insert({ name, project: projectId })
+            .select('*')
+            .single()
+        
+        if (error) return toast.error('Failed to create file')
+        else setCodeFiles([...codeFiles, data])
+    }
+
     return (
         <div className="flex h-full text-sm">
             <button onClick={pushToProduction} className="flex absolute top-[10px] right-4 text-sm items-center gap-2 p-4 pl-3 h-9 hover:brightness-110 text-[#19B785] bg-[#1B3634] rounded-full">
@@ -75,7 +90,7 @@ function Editor({ projectId, files }: props) {
                 {/* header */}
                 <div className="flex items-center justify-between h-10 p-4 bg-border">
                     <p>Files</p>
-                    <button className="opacity-70 hover:opacity-100">
+                    <button onClick={createFile} className="opacity-70 hover:opacity-100">
                         <AddFileIcon />
                     </button>
                 </div>
