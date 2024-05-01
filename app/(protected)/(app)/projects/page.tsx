@@ -22,7 +22,7 @@ export default async function ProtectedPage({
       .limit(1)
       .then(res => {
         console.log("Org result", res)
-        if (res.error) return undefined
+        if (res.error || !res.data.length) return undefined
         else return redirect(`/projects?orgId=${res.data[0].org_id}`)
       })
   }
