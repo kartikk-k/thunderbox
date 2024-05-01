@@ -17,7 +17,6 @@ async function EditorPage({
         .select('*')
         .eq('project', searchParams?.projectId)
     
-        console.log("🔥", files)
 
   return (
     <div className="relative flex flex-col h-screen overflow-hidden">

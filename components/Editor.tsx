@@ -32,7 +32,7 @@ function Editor({ projectId, files }: props) {
     // }, [codeFiles]);
 
     const handleCopyLink = (id: string) => {
-        navigator.clipboard.writeText(`${window.location.origin}/editor?projectId=${projectId}&fileId=${id}`)
+        navigator.clipboard.writeText(`${window.location.origin}/api/box?fileId=${id}`)
     }
 
     const handleFileChange = async (code: string) => {
@@ -52,10 +52,14 @@ function Editor({ projectId, files }: props) {
 
     const pushToProduction = async () => {
         if (!activeFile) return
+
+        const code = codeFiles.find(f => f.id === activeFile.id)?.staging_code
+
         const { data, error } = await supabase.from('files')
-            .update({ production_code: activeFile.staging_code })
+            .update({ production_code: code })
             .eq('id', activeFile.id)
             .single()
+
 
         if (error) return toast.error('Failed to push file to production')
         else toast.info('File pushed to production')
