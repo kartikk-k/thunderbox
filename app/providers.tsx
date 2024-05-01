@@ -3,7 +3,7 @@
 import React from 'react'
 import { Toaster } from 'sonner'
 
-function Providers({children}:{children: React.ReactNode}) {
+function Providers({ children }: { children: React.ReactNode }) {
     return (
         <div>
             <Toaster />

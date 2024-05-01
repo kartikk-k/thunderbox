@@ -33,6 +33,7 @@ function Editor({ projectId, files }: props) {
 
     const handleCopyLink = (id: string) => {
         navigator.clipboard.writeText(`${window.location.origin}/api/box?fileId=${id}`)
+        toast('Link copied to clipboard')
     }
 
     const handleFileChange = async (code: string) => {
