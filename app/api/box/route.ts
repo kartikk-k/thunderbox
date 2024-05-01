@@ -12,12 +12,13 @@ export async function GET(req: NextRequest) {
     const supabase = createClient()
 
     const { data, error } = await supabase.from('files')
-        .select(isPreviewSite ? 'staging_code' : 'production_code')
+        // .select(isPreviewSite ? 'staging_code' : 'production_code')
+        .select('staging_code')
         .eq('id', fileId)
         .single()
 
     if (error) return Response.json({ message: error.message }, { status: 500 })
     // @ts-ignore
-    else return new Response(isPreviewSite ? data.staging_code : data.production_code)
+    else return new Response(isPreviewSite ? data.staging_code : data.staging_code)
 
 }
